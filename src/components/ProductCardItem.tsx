@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Stack, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
 
 import { formatPrice } from '../utils/formatPrice'
 
@@ -22,6 +22,8 @@ export function ProductCardItem({ product }: ProductCardItemProps) {
         </Heading>
         <Text noOfLines={2}>{product.description}</Text>
       </Box>
+
+      <Image src={product.image} alt={product.name} />
 
       <Flex align="center" justify="space-between" px={4}>
         <Text>{formatPrice(product.price)}</Text>

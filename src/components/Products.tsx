@@ -4,6 +4,7 @@ import { HiOutlineViewGrid, HiOutlineViewList } from 'react-icons/hi'
 
 import { api } from '../services/api'
 import { ProductCardItem } from './ProductCardItem'
+import { ProductListItem } from './ProductListItem'
 
 type Product = {
   id: number
@@ -46,7 +47,7 @@ export function Products() {
       ) : (
         <Stack spacing={8}>
           {products.map(product => (
-            <ProductCardItem key={product.id} product={product} />
+            <ProductListItem key={product.id} product={product} />
           ))}
         </Stack>
       )}
