@@ -15,6 +15,7 @@
     "@chakra-ui/react": "^1.6.6",
     "@emotion/react": "^11.4.1",
     "@emotion/styled": "^11.3.0",
+    "axios": "^0.21.1",
     "framer-motion": "^4.1.17",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -38,6 +39,7 @@
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "miragejs": "^0.1.41",
     "prettier": "^2.3.2",
     "typescript": "^4.4.2"
   },
