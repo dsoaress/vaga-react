@@ -1,5 +1,6 @@
-import { ChakraProvider, Heading } from '@chakra-ui/react'
+import { ChakraProvider } from '@chakra-ui/react'
 
+import { HomePage } from './pages/Home'
 import { makeServer } from './services/mirage'
 import { theme } from './styles/theme'
 
@@ -8,7 +9,7 @@ makeServer()
 export function App() {
   return (
     <ChakraProvider theme={theme}>
-      <Heading>Hello</Heading>
+      <HomePage />
     </ChakraProvider>
   )
 }
