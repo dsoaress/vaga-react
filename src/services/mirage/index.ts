@@ -1,5 +1,6 @@
 import { createServer } from 'miragejs'
 
+import { categories } from './categories'
 import { products } from './products'
 import { reviews } from './reviews'
 import { stock } from './stock'
@@ -9,6 +10,10 @@ export function makeServer() {
   const server = createServer({
     routes() {
       this.namespace = 'api'
+
+      this.get('/categories', () => {
+        return categories
+      })
 
       this.get('/products', () => {
         return products
