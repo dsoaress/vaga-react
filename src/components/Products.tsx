@@ -13,26 +13,14 @@ import { useEffect, useState } from 'react'
 import { HiOutlineViewGrid, HiOutlineViewList } from 'react-icons/hi'
 
 import { api } from '../services/api'
+import { CategoryType } from '../types/Category'
+import { ProductType } from '../types/Product'
 import { ProductCardItem } from './ProductCardItem'
 import { ProductListItem } from './ProductListItem'
 
-type Product = {
-  id: number
-  name: string
-  description: string
-  image: string
-  price: number
-  categories: number[]
-}
-
-type Category = {
-  id: number
-  name: string
-}
-
 export function Products() {
-  const [products, setProducts] = useState<Product[]>([])
-  const [categories, setCategories] = useState<Category[]>([])
+  const [products, setProducts] = useState<ProductType[]>([])
+  const [categories, setCategories] = useState<CategoryType[]>([])
   const [category, setCategory] = useState<number | 'all'>('all')
   const [viewOptions, setViewOptions] = useState<'cards' | 'list'>('cards')
 
@@ -47,7 +35,7 @@ export function Products() {
   }, [])
 
   return (
-    <Box maxW="container.lg" px={8} mx="auto">
+    <Box maxW="container.lg" px={8} py={12} mx="auto">
       <Flex color="gray.500" justify="space-between" py={8}>
         <Menu>
           <MenuButton>Categorias</MenuButton>
@@ -83,7 +71,7 @@ export function Products() {
         </SimpleGrid>
       ) : (
         <Stack spacing={8}>
-          {products.map(product => {
+          {products?.map(product => {
             if (category !== 'all' && !product.categories.includes(category)) {
               return null
             }

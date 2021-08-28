@@ -1,36 +1,22 @@
-import { Box, Button, Flex, Heading, Image, Stack, Text } from '@chakra-ui/react'
+import { Image, LinkBox, LinkOverlay, Stack } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
-import { formatPrice } from '../utils/formatPrice'
-
-type Product = {
-  name: string
-  description: string
-  image: string
-  price: number
-}
+import { ProductType } from '../types/Product'
+import { ProductDescription } from './ProductDescription'
+import { ProductPrice } from './ProductPrice'
 
 type ProductCardItemProps = {
-  product: Product
+  product: ProductType
 }
 
 export function ProductCardItem({ product }: ProductCardItemProps) {
   return (
-    <Stack justify="space-between" py={4} shadow="md" borderRadius="lg" bg="white">
-      <Box px={4}>
-        <Heading as="h2" fontSize="lg">
-          {product.name}
-        </Heading>
-        <Text noOfLines={2}>{product.description}</Text>
-      </Box>
-
+    <LinkBox as={Stack} justify="space-between" py={4} shadow="md" borderRadius="lg" bg="white">
+      <LinkOverlay as={Link} to={product.slug}>
+        <ProductDescription name={product.name} description={product.description} noOfLines={2} />
+      </LinkOverlay>
       <Image src={product.image} alt={product.name} />
-
-      <Flex align="center" justify="space-between" px={4}>
-        <Text>{formatPrice(product.price)}</Text>
-        <Button colorScheme="blue" size="xs">
-          Comprar
-        </Button>
-      </Flex>
-    </Stack>
+      <ProductPrice price={product.price} />
+    </LinkBox>
   )
 }
