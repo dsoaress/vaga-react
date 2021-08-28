@@ -4,8 +4,6 @@ import { HomePage } from './pages/Home'
 import { makeServer } from './services/mirage'
 import { theme } from './styles/theme'
 
-makeServer()
-
 export function App() {
   return (
     <ChakraProvider theme={theme}>
