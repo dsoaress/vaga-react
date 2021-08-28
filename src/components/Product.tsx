@@ -1,23 +1,36 @@
-import { Box } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { Box, Button, Flex, Heading, Image, SimpleGrid, Stack, Text } from '@chakra-ui/react'
 import { useParams } from 'react-router-dom'
 
-import { api } from '../services/api'
-import { ProductType } from '../types/Product'
+import { useProduct } from '../hooks/useProducts'
+import { formatPrice } from '../utils/formatPrice'
+import { Reviews } from './Reviews'
 
 export function Product() {
   const { productSlug }: { productSlug: string } = useParams()
-  const [product, setProduct] = useState<ProductType>()
+  const { data } = useProduct(productSlug)
 
-  useEffect(() => {
-    api.get(`/products?slug=${productSlug}`).then(response => {
-      setProduct(response.data[0])
-    })
-  }, [productSlug])
+  if (!data) return <p>loading...</p>
 
   return (
     <Box maxW="container.lg" px={8} py={12} mx="auto">
-      {product?.name}
+      <SimpleGrid columns={[null, null, 2]} alignItems="center" mb={16}>
+        <Stack spacing={6}>
+          <Heading as="h2" fontSize={['2xl', null, '5xl']}>
+            {data?.product.name}
+          </Heading>
+          <Text fontSize={[null, null, 'xl']}>{data?.product?.description}</Text>
+
+          <Flex align="center" justify="space-between">
+            <Text>{formatPrice(data?.product.price)}</Text>
+
+            <Button colorScheme="blue" borderRadius="full">
+              Comprar
+            </Button>
+          </Flex>
+        </Stack>
+        <Image src={data?.product.image} alt={data?.product.name} />
+      </SimpleGrid>
+      <Reviews reviews={data?.reviews} />
     </Box>
   )
 }

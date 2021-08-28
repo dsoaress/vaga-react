@@ -9,30 +9,20 @@ import {
   SimpleGrid,
   Stack
 } from '@chakra-ui/react'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { HiOutlineViewGrid, HiOutlineViewList } from 'react-icons/hi'
 
-import { api } from '../services/api'
-import { CategoryType } from '../types/Category'
-import { ProductType } from '../types/Product'
+import { useCategories } from '../hooks/useCategories'
+import { useProducts } from '../hooks/useProducts'
 import { ProductCardItem } from './ProductCardItem'
 import { ProductListItem } from './ProductListItem'
 
 export function Products() {
-  const [products, setProducts] = useState<ProductType[]>([])
-  const [categories, setCategories] = useState<CategoryType[]>([])
   const [category, setCategory] = useState<number | 'all'>('all')
   const [viewOptions, setViewOptions] = useState<'cards' | 'list'>('cards')
 
-  useEffect(() => {
-    api.get('/products').then(response => {
-      setProducts(response.data)
-    })
-
-    api.get('/categories').then(response => {
-      setCategories(response.data)
-    })
-  }, [])
+  const { data: products } = useProducts()
+  const { data: categories } = useCategories()
 
   return (
     <Box maxW="container.lg" px={8} py={12} mx="auto">
@@ -41,7 +31,7 @@ export function Products() {
           <MenuButton>Categorias</MenuButton>
           <MenuList>
             <MenuItem onClick={() => setCategory('all')}>Todos os produtos</MenuItem>
-            {categories.map(category => (
+            {categories?.map(category => (
               <MenuItem key={category.id} onClick={() => setCategory(category.id)}>
                 {category.name}
               </MenuItem>
@@ -61,7 +51,7 @@ export function Products() {
 
       {viewOptions === 'cards' ? (
         <SimpleGrid columns={[1, 2, 2, 4]} gap={8}>
-          {products.map(product => {
+          {products?.map(product => {
             if (category !== 'all' && !product.categories.includes(category)) {
               return null
             }
