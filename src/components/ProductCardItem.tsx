@@ -21,7 +21,7 @@ export function ProductCardItem({ product }: ProductCardItemProps) {
         <ProductDescription name={product.name} description={product.description} noOfLines={2} />
       </LinkOverlay>
       <Image src={product.image} alt={product.name} />
-      <ProductPrice price={product.price} />
+      <ProductPrice product={product} />
     </LinkBox>
   )
 }

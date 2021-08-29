@@ -22,7 +22,7 @@ export function ProductListItem({ product }: ProductListItemProps) {
         >
           <ProductDescription name={product.name} description={product.description} />
         </LinkOverlay>
-        <ProductPrice price={product.price} />
+        <ProductPrice product={product} />
       </Stack>
     </LinkBox>
   )
