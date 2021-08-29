@@ -12,7 +12,7 @@ type ProductListItemProps = {
 
 export function ProductListItem({ product }: ProductListItemProps) {
   return (
-    <LinkBox as={Flex} align="center" py={4} shadow="md" borderRadius="lg" bg="white">
+    <LinkBox as={Flex} align="center" py={4} shadow="md" borderRadius="lg">
       <Image src={product.image} alt={product.name} width={52} />
       <Stack justify="space-between">
         <LinkOverlay

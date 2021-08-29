@@ -13,22 +13,14 @@ type ProductPriceProps = {
 export function ProductPrice({ product }: ProductPriceProps) {
   const dispatch = useDispatch()
 
-  const handleAddProductToCart = useCallback(
-    (product: ProductType) => {
-      dispatch(addProductToCart(product))
-    },
-    [dispatch]
-  )
+  const handleAddProductToCart = useCallback(() => {
+    dispatch(addProductToCart(product))
+  }, [dispatch, product])
 
   return (
     <Flex align="center" justify="space-between" px={4}>
       <Text>{formatPrice(product.price)}</Text>
-      <Button
-        onClick={() => handleAddProductToCart(product)}
-        colorScheme="blue"
-        size="xs"
-        borderRadius="full"
-      >
+      <Button onClick={handleAddProductToCart} colorScheme="blue" size="xs" borderRadius="full">
         Comprar
       </Button>
     </Flex>

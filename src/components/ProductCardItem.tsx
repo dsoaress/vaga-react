@@ -12,7 +12,7 @@ type ProductCardItemProps = {
 
 export function ProductCardItem({ product }: ProductCardItemProps) {
   return (
-    <LinkBox as={Stack} justify="space-between" py={4} shadow="md" borderRadius="lg" bg="white">
+    <LinkBox as={Stack} justify="space-between" py={4} shadow="md" borderRadius="lg">
       <LinkOverlay
         as={Link}
         to={product.slug}

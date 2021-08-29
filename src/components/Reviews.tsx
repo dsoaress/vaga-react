@@ -39,7 +39,6 @@ export function Reviews({ reviews }: ReviewsProps) {
             p={4}
             shadow="md"
             borderRadius="lg"
-            bg="white"
             key={review.id}
           >
             <Text>{review.review}</Text>

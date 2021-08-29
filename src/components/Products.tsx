@@ -1,5 +1,4 @@
 import {
-  Box,
   Flex,
   HStack,
   Menu,
@@ -14,8 +13,10 @@ import { HiOutlineViewGrid, HiOutlineViewList } from 'react-icons/hi'
 
 import { useCategories } from '../hooks/useCategories'
 import { useProducts } from '../hooks/useProducts'
+import { Container } from './Container'
 import { ProductCardItem } from './ProductCardItem'
 import { ProductListItem } from './ProductListItem'
+import { Spinner } from './Spinner'
 
 export function Products() {
   const [category, setCategory] = useState<number | 'all'>('all')
@@ -24,9 +25,13 @@ export function Products() {
   const { data: products } = useProducts()
   const { data: categories } = useCategories()
 
+  if (!products) {
+    return <Spinner />
+  }
+
   return (
-    <Box maxW="container.lg" px={8} pb={12} mx="auto">
-      <Flex color="gray.500" justify="space-between" py={8}>
+    <Container>
+      <Flex color="gray.500" justify="space-between" pb={8}>
         <Menu>
           <MenuButton>Categorias</MenuButton>
           <MenuList>
@@ -70,6 +75,6 @@ export function Products() {
           })}
         </Stack>
       )}
-    </Box>
+    </Container>
   )
 }
