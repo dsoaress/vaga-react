@@ -25,7 +25,7 @@ export function Products() {
   const { data: categories } = useCategories()
 
   return (
-    <Box maxW="container.lg" px={8} py={12} mx="auto">
+    <Box maxW="container.lg" px={8} pb={12} mx="auto">
       <Flex color="gray.500" justify="space-between" py={8}>
         <Menu>
           <MenuButton>Categorias</MenuButton>
