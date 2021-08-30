@@ -51,7 +51,7 @@ export function Product() {
         </Stack>
         <Image src={product.image} alt={product.name} />
       </SimpleGrid>
-      <Reviews reviews={reviews} />
+      <Reviews reviews={reviews} productId={product.id} productSlug={productSlug} />
     </Container>
   )
 }
