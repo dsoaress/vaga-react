@@ -1,4 +1,4 @@
-import { Button, Link as ChakraLink, Text } from '@chakra-ui/react'
+import { Button, Link as ChakraLink, Text, useToast } from '@chakra-ui/react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { compare } from 'bcryptjs'
 import { useState } from 'react'
@@ -23,6 +23,7 @@ type SignInFormData = {
 
 export function SignIn() {
   const history = useHistory()
+  const toast = useToast()
   const { setUser } = useUser()
   const [isLoading, setIsLoading] = useState(false)
 
@@ -49,25 +50,31 @@ export function SignIn() {
     })
 
     if (!data) {
-      return
+      toast({
+        title: 'Email e/ou senha incorretos',
+        duration: 3000,
+        status: 'error'
+      })
     }
 
     const user = data[0]
 
-    if (!user?.password) {
-      return
+    if (user?.password) {
+      const passwordCheck = await compare(password, user.password)
+
+      if (passwordCheck) {
+        setUser(user)
+        localStorage.setItem('userId', user.id.toString())
+        history.push('/')
+      } else {
+        toast({
+          title: 'Email e/ou senha incorretos',
+          duration: 3000,
+          status: 'error'
+        })
+      }
     }
 
-    const passwordCheck = await compare(password, user.password)
-
-    if (!passwordCheck) {
-      //
-      return
-    }
-
-    setUser(user)
-    localStorage.setItem('userId', user.id.toString())
-    history.push('/')
     setIsLoading(false)
   }
 
