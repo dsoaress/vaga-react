@@ -3,8 +3,19 @@ import { Reducer } from 'redux'
 
 import { CartState } from '../../../types/Cart'
 
-const INITIAL_STATE: CartState = {
+const storagedCart = localStorage.getItem('cart')
+let parsedStoragedCart: CartState | null = null
+let INITIAL_STATE: CartState = {
   items: []
+}
+
+if (storagedCart) {
+  parsedStoragedCart = JSON.parse(storagedCart)
+}
+
+if (parsedStoragedCart) {
+  INITIAL_STATE = parsedStoragedCart
+  console.log(parsedStoragedCart)
 }
 
 export const cart: Reducer<CartState> = (state = INITIAL_STATE, action) => {
@@ -17,11 +28,14 @@ export const cart: Reducer<CartState> = (state = INITIAL_STATE, action) => {
 
         if (productInCartIndex >= 0) {
           draft.items[productInCartIndex].quantity++
+          localStorage.setItem('cart', JSON.stringify(draft))
         } else {
           draft.items.push({
             product,
             quantity: 1
           })
+
+          localStorage.setItem('cart', JSON.stringify(draft))
         }
 
         break
@@ -33,6 +47,7 @@ export const cart: Reducer<CartState> = (state = INITIAL_STATE, action) => {
         const productInCartIndex = draft.items.findIndex(item => item.product.id === product.id)
 
         draft.items[productInCartIndex].quantity = quantity
+        localStorage.setItem('cart', JSON.stringify(draft))
 
         break
       }
@@ -43,6 +58,14 @@ export const cart: Reducer<CartState> = (state = INITIAL_STATE, action) => {
         const productInCartIndex = draft.items.findIndex(item => item.product.id === product.id)
 
         draft.items.splice(productInCartIndex, 1)
+        localStorage.setItem('cart', JSON.stringify(draft))
+
+        break
+      }
+
+      case 'CLEAN_CART_STATE': {
+        draft.items = []
+        localStorage.removeItem('cart')
 
         break
       }

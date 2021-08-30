@@ -182,7 +182,7 @@ export function SignUp() {
 
       <Text textAlign="center" mt={8}>
         Já possui uma conta?{' '}
-        <ChakraLink as={Link} to="/auth/sign-up" fontWeight="medium" color="blue.500">
+        <ChakraLink as={Link} to="/auth" fontWeight="medium" color="blue.500">
           Faça login
         </ChakraLink>
       </Text>

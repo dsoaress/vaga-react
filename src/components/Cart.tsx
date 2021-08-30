@@ -16,8 +16,9 @@ import {
 } from '@chakra-ui/react'
 import { BsTrash } from 'react-icons/bs'
 import { useDispatch, useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 
+import { useUser } from '../contexts/UserContext'
 import { changeProductQuantity, removeProductFromCart } from '../store/modules/cart/actions'
 import { CartState } from '../types/Cart'
 import { ProductType } from '../types/Product'
@@ -29,6 +30,8 @@ import { EmptyCart } from './EmptyCart'
 
 export function Cart() {
   const dispatch = useDispatch()
+  const history = useHistory()
+  const { user } = useUser()
   const { items } = useSelector<State, CartState>(state => state.cart)
 
   const handleChangeProductQuantity = (product: ProductType, quantity: number) => {
@@ -54,9 +57,19 @@ export function Cart() {
               Seu carrinho
             </Heading>
 
-            <Button colorScheme="blue" borderRadius="full">
-              Finalizar compra
-            </Button>
+            {user ? (
+              <Button
+                onClick={() => history.push('/checkout')}
+                colorScheme="blue"
+                borderRadius="full"
+              >
+                Finalizar compra
+              </Button>
+            ) : (
+              <Button onClick={() => history.push('/auth')} colorScheme="blue" borderRadius="full">
+                Fazer login
+              </Button>
+            )}
           </HStack>
 
           <Stack spacing={6}>

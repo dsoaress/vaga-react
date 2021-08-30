@@ -64,7 +64,7 @@ export function Header() {
               </MenuList>
             </Menu>
           ) : (
-            <Link to="/auth/sign-in">
+            <Link to="/auth">
               <Avatar bg="gray.400" color="white" size="sm" />
             </Link>
           )}

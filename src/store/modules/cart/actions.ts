@@ -27,3 +27,9 @@ export function removeProductFromCart(product: ProductType) {
     }
   }
 }
+
+export function cleanCartState() {
+  return {
+    type: 'CLEAN_CART_STATE'
+  }
+}
