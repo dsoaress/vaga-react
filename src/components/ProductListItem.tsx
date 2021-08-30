@@ -13,14 +13,18 @@ type ProductListItemProps = {
 export function ProductListItem({ product }: ProductListItemProps) {
   return (
     <LinkBox as={Flex} align="center" py={4} shadow="md" borderRadius="lg">
-      <Image src={product.image} alt={product.name} width={52} />
+      <Image src={product.image} alt={product.name} width={[14, 32]} />
       <Stack justify="space-between">
         <LinkOverlay
           as={Link}
           to={product.slug}
           onMouseEnter={() => handlePrefetchProduct(product.slug)}
         >
-          <ProductDescription name={product.name} description={product.description} />
+          <ProductDescription
+            name={product.name}
+            description={product.description}
+            noOfLines={[2, 6]}
+          />
         </LinkOverlay>
         <ProductPrice product={product} />
       </Stack>
