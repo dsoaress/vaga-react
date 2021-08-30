@@ -43,7 +43,7 @@ export function Reviews({ reviews }: ReviewsProps) {
           >
             <Text>{review.review}</Text>
             <Stack align="center" my={8} ml={8} minW={32}>
-              <Avatar size="lg" src={review.users?.avatar} name={review.users?.name} />
+              <Avatar size="lg" src={review.users?.avatar ?? undefined} name={review.users?.name} />
               <Text textAlign="center">{review.users?.name}</Text>
             </Stack>
           </Flex>

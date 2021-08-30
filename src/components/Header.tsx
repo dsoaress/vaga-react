@@ -15,11 +15,13 @@ import { useSelector } from 'react-redux'
 import { Link, useHistory } from 'react-router-dom'
 
 import logo from '../assets/logo.svg'
+import { useUser } from '../contexts/UserContext'
 import { CartState } from '../types/Cart'
 import { State } from '../types/State'
 
 export function Header() {
   const history = useHistory()
+  const { user, signOut } = useUser()
   const { items } = useSelector<State, CartState>(state => state.cart)
 
   return (
@@ -51,21 +53,21 @@ export function Header() {
             )}
           </Box>
 
-          <Menu>
-            <MenuButton border="2px" borderColor="blue.500" borderRadius="full">
-              <Avatar
-                bg="gray.400"
-                color="white"
-                size="sm"
-                src="https://github.com/dsoaress.png"
-                name="Daniel Soares"
-              />
-            </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => history.push('/profile')}>Edite seu perfil</MenuItem>
-              <MenuItem>Sair</MenuItem>
-            </MenuList>
-          </Menu>
+          {user ? (
+            <Menu>
+              <MenuButton>
+                <Avatar bg="gray.400" color="white" size="sm" src={user.avatar} name={user.name} />
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => history.push('/profile')}>Edite seu perfil</MenuItem>
+                <MenuItem onClick={signOut}>Sair</MenuItem>
+              </MenuList>
+            </Menu>
+          ) : (
+            <Link to="/auth/sign-in">
+              <Avatar bg="gray.400" color="white" size="sm" />
+            </Link>
+          )}
         </HStack>
       </Flex>
     </Box>
