@@ -1,7 +1,11 @@
 import {
+  Box,
+  Button,
   Heading,
   HStack,
   IconButton,
+  LinkBox,
+  LinkOverlay,
   NumberDecrementStepper,
   NumberIncrementStepper,
   NumberInput,
@@ -11,24 +15,49 @@ import {
   Text
 } from '@chakra-ui/react'
 import { BsTrash } from 'react-icons/bs'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 
+import { changeProductQuantity, removeProductFromCart } from '../store/modules/cart/actions'
 import { CartState } from '../types/Cart'
+import { ProductType } from '../types/Product'
 import { State } from '../types/State'
 import { formatPrice } from '../utils/formatPrice'
+import { handlePrefetchProduct } from '../utils/handlePrefetchProduct'
 import { Container } from './Container'
 import { EmptyCart } from './EmptyCart'
 
 export function Cart() {
+  const dispatch = useDispatch()
   const { items } = useSelector<State, CartState>(state => state.cart)
+
+  const handleChangeProductQuantity = (product: ProductType, quantity: number) => {
+    dispatch(changeProductQuantity(product, quantity))
+  }
+
+  const handleRemoveProductFromCart = (product: ProductType) => {
+    dispatch(removeProductFromCart(product))
+  }
+
+  const totalPrice = formatPrice(
+    items.reduce((sumTotal, item) => {
+      return sumTotal + item.product.price * item.quantity
+    }, 0)
+  )
 
   return (
     <Container>
       {items.length ? (
         <>
-          <Heading as="h2" fontSize={['2xl', null, '5xl']}>
-            Seu carrinho
-          </Heading>
+          <HStack justify="space-between" spacing={8} mb={10}>
+            <Heading as="h2" fontSize={['2xl', null, '5xl']}>
+              Seu carrinho
+            </Heading>
+
+            <Button colorScheme="blue" borderRadius="full">
+              Finalizar compra
+            </Button>
+          </HStack>
 
           <Stack spacing={6}>
             {items.map(item => {
@@ -42,13 +71,27 @@ export function Cart() {
                   p={4}
                   key={item.product.id}
                 >
-                  <HStack spacing={6}>
+                  <LinkBox as={HStack} spacing={6}>
                     <img src={item.product.image} alt={item.product.name} width={40} />
-                    <Text>{item.product.name}</Text>
-                  </HStack>
 
+                    <LinkOverlay
+                      as={Link}
+                      to={item.product.slug}
+                      onMouseEnter={() => handlePrefetchProduct(item.product.slug)}
+                    >
+                      <Text>{item.product.name}</Text>
+                    </LinkOverlay>
+                  </LinkBox>
                   <HStack spacing={6}>
-                    <NumberInput defaultValue={item.quantity} min={1} width={20}>
+                    <NumberInput
+                      defaultValue={item.quantity}
+                      onChange={quantity =>
+                        handleChangeProductQuantity(item.product, Number(quantity))
+                      }
+                      min={1}
+                      max={10}
+                      width={20}
+                    >
                       <NumberInputField />
                       <NumberInputStepper>
                         <NumberIncrementStepper />
@@ -56,13 +99,26 @@ export function Cart() {
                       </NumberInputStepper>
                     </NumberInput>
 
-                    <Text>{formatPrice(subtotal)}</Text>
+                    <Box width={32}>
+                      <Text>{formatPrice(subtotal)}</Text>
+                    </Box>
 
-                    <IconButton aria-label="Remover item" colorScheme="red" icon={<BsTrash />} />
+                    <IconButton
+                      onClick={() => handleRemoveProductFromCart(item.product)}
+                      aria-label="Remover item"
+                      colorScheme="red"
+                      icon={<BsTrash />}
+                    />
                   </HStack>
                 </HStack>
               )
             })}
+
+            <Box>
+              <Text textAlign="right">
+                <strong>Total:</strong> {totalPrice}
+              </Text>
+            </Box>
           </Stack>
         </>
       ) : (

@@ -1,5 +1,4 @@
-import { Button, Flex, Text } from '@chakra-ui/react'
-import { useCallback } from 'react'
+import { Button, Flex, Text, useToast } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 
 import { addProductToCart } from '../store/modules/cart/actions'
@@ -12,10 +11,18 @@ type ProductPriceProps = {
 
 export function ProductPrice({ product }: ProductPriceProps) {
   const dispatch = useDispatch()
+  const toast = useToast()
 
-  const handleAddProductToCart = useCallback(() => {
+  function handleAddProductToCart() {
     dispatch(addProductToCart(product))
-  }, [dispatch, product])
+
+    toast({
+      title: 'Item adicionado com sucesso',
+      description: `${product.name} foi adicionado ao seu carrinho de compras`,
+      status: 'success',
+      duration: 6000
+    })
+  }
 
   return (
     <Flex align="center" justify="space-between" px={4}>

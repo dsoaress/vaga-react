@@ -8,3 +8,22 @@ export function addProductToCart(product: ProductType) {
     }
   }
 }
+
+export function changeProductQuantity(product: ProductType, quantity: number) {
+  return {
+    type: 'CHANGE_PRODUCT_QUANTITY',
+    payload: {
+      product,
+      quantity
+    }
+  }
+}
+
+export function removeProductFromCart(product: ProductType) {
+  return {
+    type: 'REMOVE_PRODUCT_FROM_CART',
+    payload: {
+      product
+    }
+  }
+}

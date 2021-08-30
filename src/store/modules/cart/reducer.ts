@@ -27,6 +27,26 @@ export const cart: Reducer<CartState> = (state = INITIAL_STATE, action) => {
         break
       }
 
+      case 'CHANGE_PRODUCT_QUANTITY': {
+        const { product, quantity } = action.payload
+
+        const productInCartIndex = draft.items.findIndex(item => item.product.id === product.id)
+
+        draft.items[productInCartIndex].quantity = quantity
+
+        break
+      }
+
+      case 'REMOVE_PRODUCT_FROM_CART': {
+        const { product } = action.payload
+
+        const productInCartIndex = draft.items.findIndex(item => item.product.id === product.id)
+
+        draft.items.splice(productInCartIndex, 1)
+
+        break
+      }
+
       default: {
         return draft
       }

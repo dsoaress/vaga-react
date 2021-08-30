@@ -1,4 +1,4 @@
-import { Button, Flex, Heading, Image, SimpleGrid, Stack, Text } from '@chakra-ui/react'
+import { Button, Flex, Heading, Image, SimpleGrid, Stack, Text, useToast } from '@chakra-ui/react'
 import { useDispatch } from 'react-redux'
 import { useParams } from 'react-router-dom'
 
@@ -11,6 +11,7 @@ import { Spinner } from './Spinner'
 
 export function Product() {
   const dispatch = useDispatch()
+  const toast = useToast()
   const { productSlug }: { productSlug: string } = useParams()
   const { data } = useProduct(productSlug)
 
@@ -22,6 +23,13 @@ export function Product() {
 
   const handleAddProductToCart = () => {
     dispatch(addProductToCart(product))
+
+    toast({
+      title: 'Item adicionado com sucesso',
+      description: `${product.name} foi adicionado ao seu carrinho de compras`,
+      status: 'success',
+      duration: 6000
+    })
   }
 
   return (

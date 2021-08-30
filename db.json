@@ -73,48 +73,6 @@
       "categories": [1]
     }
   ],
-  "stock": [
-    {
-      "id": 1,
-      "productsId": 1,
-      "quantity": 10
-    },
-    {
-      "id": 2,
-      "productsId": 2,
-      "quantity": 10
-    },
-    {
-      "id": 3,
-      "productsId": 3,
-      "quantity": 10
-    },
-    {
-      "id": 4,
-      "productsId": 4,
-      "quantity": 10
-    },
-    {
-      "id": 5,
-      "productsId": 5,
-      "quantity": 10
-    },
-    {
-      "id": 6,
-      "productsId": 6,
-      "quantity": 10
-    },
-    {
-      "id": 7,
-      "productsId": 7,
-      "quantity": 10
-    },
-    {
-      "id": 8,
-      "productsId": 8,
-      "quantity": 0
-    }
-  ],
   "categories": [
     {
       "id": 1,
